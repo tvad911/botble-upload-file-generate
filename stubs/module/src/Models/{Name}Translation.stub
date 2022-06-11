@@ -1,0 +1,29 @@
+<?php
+
+namespace Botble\{Module}\Models;
+
+use Botble\Base\Models\BaseModel;
+
+class {Name}Translation extends BaseModel
+{
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = '{names}_translations';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'lang_code',
+        '{names}_id',
+        'name',
+    ];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+}

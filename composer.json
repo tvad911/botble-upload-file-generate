@@ -1,0 +1,21 @@
+{
+    "name": "botble/upload-file-generate",
+    "description": "Upload file generate",
+    "type": "plugin",
+    "autoload": {
+        "psr-4": {
+            "Botble\\UploadFileGenerator\\": "src"
+        }
+    },
+    "require": {
+        "botble/platform": "*@dev",
+        "botble/plugin-management": "*@dev"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Botble\\UploadFileGenerator\\Providers\\UploadFileGeneratorServiceProvider"
+            ]
+        }
+    }
+}

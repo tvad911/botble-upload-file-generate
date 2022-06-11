@@ -1,0 +1,64 @@
+<?php
+
+namespace Botble\{Module}\Services\Abstracts;
+
+use Botble\{Module}\Models\{Module};
+use Botble\{Module}\Models\{Module}File;
+use Botble\{Module}\Repositories\Interfaces\{Name}Interface;
+use Illuminate\Http\Request;
+use Botble\Media\Services\UploadsManager;
+use Botble\Media\Services\ThumbnailService;
+
+abstract class Store{Name}ServiceAbstract
+{
+    /**
+     * @var UploadsManager
+     */
+    protected $uploadManager;
+
+    /**
+     * @var {Name}Interface
+     */
+    protected ${+name}Repository;
+
+    /**
+     * @var ThumbnailService
+     */
+    protected $thumbnailService;
+
+    /**
+     * @param {Name}Interface ${+name}Repository
+     * @param UploadsManager $uploadManager
+     * @param ThumbnailService $thumbnailService
+     */
+    public function __construct(
+        {Name}Interface ${+name}Repository,
+        UploadsManager $uploadManager,
+        ThumbnailService $thumbnailService
+    ) {
+        $this->{+name}Repository = ${+name}Repository;
+        $this->uploadManager = $uploadManager;
+        $this->thumbnailService = $thumbnailService;
+    }
+
+    /**
+     * @param Request $request
+     * @param LeaseContract $leaseContract
+     * @return mixed
+     */
+    abstract public function execute(Request $request, LeaseContract $leaseContract);
+
+    /**
+     * @param Request $request
+     * @param LeaseContract $leaseContract
+     * @return mixed
+     */
+    abstract public function handleUpdate(Request $request, LeaseContract $leaseContract);
+
+    /**
+     * @param Request $request
+     * @param LeaseContract $leaseContract
+     * @return mixed
+     */
+    abstract public function deleteFile(Request $request, LeaseContract $leaseContract);
+}

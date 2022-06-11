@@ -1,0 +1,29 @@
+<?php
+
+namespace Botble\{Module}\Listeners;
+
+use Botble\Base\Events\DeletedContentEvent;
+use Exception;
+use Botble\{Module}\Services\Store{Name}Service;
+
+class UpdatedContentListener
+{
+
+    /**
+     * Handle the event.
+     *
+     * @param UpdatedContentEvent $event
+     * @return void
+     */
+    public function handle(UpdatedContentEvent $event)
+    {
+        try {
+            if ($event->data && in_array(get_class($event->data),
+                config('plugins.{-module}.general.supported', []))) {
+                app(Store{Name}Service::class)->handleUpdate($event->request, $event->data);
+            }
+        } catch (Exception $exception) {
+            info($exception->getMessage());
+        }
+    }
+}

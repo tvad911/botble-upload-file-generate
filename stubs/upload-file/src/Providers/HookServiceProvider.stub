@@ -1,0 +1,50 @@
+<?php
+
+namespace Botble\{Module}\Providers;
+
+use Assets;
+use Illuminate\Support\ServiceProvider;
+use MetaBox;
+
+class HookServiceProvider extends ServiceProvider
+{
+    /**
+     * @throws \Throwable
+     */
+    public function boot()
+    {
+    	add_action(BASE_ACTION_META_BOXES, [$this, 'add{Name}Box'], 13, 2);
+    }
+
+    /**
+     * @param string $context
+     * @param $object
+     */
+    public function add{Name}Box($context, $object)
+    {
+        if ($object && in_array(get_class($object),
+                config('plugins.{-name}.general.supported', [])) && $context == 'advanced') {
+            Assets::addStylesDirectly(['vendor/core/plugins/{name}/css/{name}-admin.css'])
+                ->addScriptsDirectly(['vendor/core/plugins/{name}/js/{name}-admin.js'])
+                ->addScripts(['sortable']);
+
+            MetaBox::addMetaBox('{name}_wrap', trans('plugins/{module}::{module}.{module}_file'), [$this, '{+name}MetaField'],
+                get_class($object), $context, 'default');
+        }
+    }
+
+    /**
+     * @return string
+     * @throws \Throwable
+     */
+    public function {+name}MetaField()
+    {
+        $value = null;
+        $args = func_get_args();
+        if ($args[0] && $args[0]->id) {
+            $value = lease_contract_file_data($args[0]);
+        }
+
+        return view('plugins/{module}::{name}-box', compact('value'))->render();
+    }
+}

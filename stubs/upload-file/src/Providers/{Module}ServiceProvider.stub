@@ -1,0 +1,6 @@
+// Add into function register()
+$this->app->bind(\Botble\{Module}\Repositories\Interfaces\{Name}Interface::class, function () {
+    return new \Botble\{Module}\Repositories\Caches\{Name}CacheDecorator(
+        new \Botble\{Module}\Repositories\Eloquent\{Name}Repository(new \Botble\{Module}\Models\{Name})
+    );
+});

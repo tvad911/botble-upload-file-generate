@@ -1,0 +1,54 @@
+{!! Form::hidden('{name}', $value ? json_encode($value) : null, ['id' => '{name}-data', 'class' => 'form-control']) !!}
+<input id="{names}" name="{names}[]" type="file" multiple accept="{!! config('plugins.{module}.file.accept') !!}" style="display: none;">
+<div style="position: relative;">
+    <p class="count-{-name}"></p>
+    <div class="list-files-{-name}">
+        <div class="row" id="list-files-items">
+            @if (!empty($value))
+                @foreach ($value as $key => $item)
+                    <div class="col-md-2 col-sm-3 col-4 file-{-name}-item" data-id="{{ Arr::get($item, 'id') }}" data-img="{{ Arr::get($item, 'img') }}" data-options="{{ Arr::get($item, 'options') }}" data-id="{{ Arr::get($item, 'id') }}" data-name="{{ Arr::get($item, 'name') }}" data-folder="{{ Arr::get($item, 'folder') }}" data-mimetype="{{ Arr::get($item, 'mime_type') }}" data-url="{{ Arr::get($item, 'url') }}">
+                        <div class="{-name}_wrapper">
+                            @php
+                                $mime_type = Arr::get($item, 'mime_type');
+                                $url = get_{module}_thumbnail_image_file($mime_type);
+                            @endphp
+                            @if(empty($url))
+                                <img src="{{ RvMedia::getImageUrl(Arr::get($item, 'folder') . '/' . Arr::get($item, 'url'), 'thumb') }}" alt="{{ trans('{types}/{-module}::{-name}.name') }}">
+                            @else
+                                <img src="{{ config('app.url') . '/vendor/core/plugins/' . $url }}" alt="{{ Arr::get($item, 'url') }}">
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+        <a href="#" class="btn_select_file">{{ trans('{types}/{-module}::{-name}.select_file') }}</a>&nbsp;
+        <a href="#" class="text-danger reset-file @if (empty($value)) hidden @endif">{{ trans('{types}/{-module}::{-name}.reset') }}</a>
+    </div>
+</div>
+
+<div id="edit-file-item" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('{types}/{-module}::{-name}.update_file_description') }}</strong></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+
+            <div class="modal-body with-padding">
+                <p><input type="text" class="form-control" id="file-item-description" placeholder="{{ trans('{types}/{-module}::{-name}.update_file_description_placeholder') }}"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="float-left btn btn-info" id="download-file-item" data-link="" data-base="{{ config('app.url') }}">{{ trans('{types}/{-module}::{-name}.download_file') }}</button>
+                <button class="float-left btn btn-danger" id="delete-file-item" href="#">{{ trans('{types}/{-module}::{-name}.delete_file') }}</button>
+                <button class="float-right btn btn-secondary" data-dismiss="modal">{{ trans('core/base::forms.cancel') }}</button>
+                <button class="float-right btn btn-primary" id="update-file-item">{{ trans('core/base::forms.update') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Modal -->

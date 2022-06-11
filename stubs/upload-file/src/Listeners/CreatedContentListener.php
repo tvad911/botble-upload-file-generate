@@ -1,0 +1,29 @@
+<?php
+
+namespace Botble\{Module}\Listeners;
+
+use Botble\Base\Events\CreatedContentEvent;
+use Exception;
+use Botble\{Module}\Services\Store{Name}Service;
+
+class CreatedContentListener
+{
+
+    /**
+     * Handle the event.
+     *
+     * @param CreatedContentEvent $event
+     * @return void
+     */
+    public function handle(CreatedContentEvent $event)
+    {
+        try {
+            if ($event->data && in_array(get_class($event->data),
+                config('plugins.{-module}.general.supported', []))) {
+                app(Store{Name}Service::class)->execute($event->request, $event->data);
+            }
+        } catch (Exception $exception) {
+            info($exception->getMessage());
+        }
+    }
+}

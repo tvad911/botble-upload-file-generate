@@ -1,0 +1,26 @@
+<?php
+return [
+
+    'main_info'             => 'General information',
+    'basic_info'            => 'Basic information',
+    'name'                  => 'Title',
+    'type'                  => 'Type',
+    'images'                => 'Images',
+    'button_add_image'      => 'Add images',
+    'location'              => 'Property location',
+    'number_bedroom'        => 'Number bedrooms',
+    'number_bathroom'       => 'Number bathrooms',
+    'number_floor'          => 'Number floors',
+    'square'                => 'Square (m2)',
+    'price'                 => 'Price',
+    'features'              => 'Features',
+    'project'               => 'Project',
+    'date'                  => 'Date information',
+    'currency'              => 'Currency',
+    'city'                  => 'City',
+    'period'                => 'Period',
+    'category'              => 'Category',
+    'number_of_parking_lot' => 'Number of parking lot',
+    'floor'                 => 'Floor',
+    'state'                 => 'State',
+];
