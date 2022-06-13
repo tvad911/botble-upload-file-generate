@@ -21,17 +21,17 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
 {
     /**
      * @param Request $request
-     * @param LeaseContract $leaseContract
+     * @param {Module} ${+module}
      *
      * @return mixed|void
      */
-    public function execute(Request $request, LeaseContract $leaseContract)
+    public function execute(Request $request, {Module} ${+module})
     {
-        if($request->hasfile('contract_files'))
+        if($request->hasfile('{names}'))
         {
-            foreach($request->file('contract_files') as $file)
+            foreach($request->file('{names}') as $file)
             {
-                $log = $this->handleUpload($file, 'contracts/lease_contract_files', $leaseContract);
+                $log = $this->handleUpload($file, '{modules}/{name}', ${+module});
                 if($log != null && isset($log['message'])){
                     Log::error($log['message']);
                 }
@@ -41,24 +41,24 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
 
     /**
      * @param Request $request
-     * @param LeaseContract $leaseContract
+     * @param {Module} ${+module}
      *
      * @return mixed|void
      */
-    public function handleUpdate(Request $request, LeaseContract $leaseContract)
+    public function handleUpdate(Request $request, {Module} ${+module})
     {
         /**
          * 1. If old file empty remove file
          */
-        if (empty(json_decode($request->input('lease_contract_file')))) {
-            $files = $this->leaseContractFileRepository->allBy(['lease_contract_id' => $leaseContract->id]);
+        if (empty(json_decode($request->input('{name}')))) {
+            $files = $this->{+name}Repository->allBy(['{module}_id' => ${+module}->id]);
 
             if($files->isNotEmpty())
             {
                 foreach ($files as $file) {
                     if($this->uploadManager->deleteFile($file->folder . '/' . $file->url))
                     {
-                        $this->leaseContractFileRepository->deleteBy(['id' => $file->id, 'lease_contract_id' => $leaseContract->id]);
+                        $this->{+name}Repository->deleteBy(['id' => $file->id, '{module}_id' => ${+module}->id]);
                     }
                 }
             }
@@ -67,30 +67,30 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
         /**
          * 2.Remove old file, update information
          */
-        $arrFiles = json_decode($request->input('lease_contract_file'));
+        $arrFiles = json_decode($request->input('{name}'));
         $listFile = collect($arrFiles);
 
         if($listFile->isNotEmpty())
         {
             // 1. Update description
             foreach ($listFile as $item) {
-                $file = $this->leaseContractFileRepository->getFirstBy(['id' => $item->id, 'lease_contract_id' => $leaseContract->id]);
+                $file = $this->{+name}Repository->getFirstBy(['id' => $item->id, '{module}_id' => ${+module}->id]);
                 if($file)
                 {
                     $file->options = $item->options;
-                    $this->leaseContractFileRepository->createOrUpdate($file);
+                    $this->{+name}Repository->createOrUpdate($file);
                 }
             }
 
             // 2. Remove old file
             $arrFile = $listFile->pluck('id')->all();
-            $files = $this->leaseContractFileRepository->allBy(['lease_contract_id' => $leaseContract->id, ['id', 'not_in', $arrFile]]);
+            $files = $this->{+name}Repository->allBy(['{module}_id' => ${+module}->id, ['id', 'not_in', $arrFile]]);
             if($files->isNotEmpty())
             {
                 foreach ($files as $file) {
                     if($this->uploadManager->deleteFile($file->folder . '/' . $file->url))
                     {
-                        $this->leaseContractFileRepository->deleteBy(['id' => $file->id, 'lease_contract_id' => $leaseContract->id]);
+                        $this->{+name}Repository->deleteBy(['id' => $file->id, '{module}_id' => ${+module}->id]);
                     }
                 }
             }
@@ -99,11 +99,11 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
         /**
          * 3. Upload new file
          */
-        if($request->hasfile('contract_files'))
+        if($request->hasfile('{names}'))
         {
-            foreach($request->file('contract_files') as $file)
+            foreach($request->file('{names}') as $file)
             {
-                $log = $this->handleUpload($file, 'contracts/lease_contract_files', $leaseContract);
+                $log = $this->handleUpload($file, '{modules}/{name}', ${+module});
                 if($log != null){
                     if(isset($log['message']))
                         Log::error($log['message']);
@@ -118,40 +118,40 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
      * @param string $path
      * @return JsonResponse|array
      */
-    public function handleUpload($fileUpload, $folderPath = 'contracts/lease_contract_files', $leaseContract)
+    public function handleUpload($fileUpload, $folderPath = '{modules}/{name}', ${+module})
     {
         if (!$fileUpload) {
             return [
                 'error'   => true,
-                'message' => trans('plugins/lease-contract::media.can_not_detect_file_type'),
+                'message' => trans('plugins/core::media.can_not_detect_file_type'),
             ];
         }
 
         try {
-            $file = $this->leaseContractFileRepository->getModel();
+            $file = $this->{+name}Repository->getModel();
 
-            if ($fileUpload->getSize() / 1024 > (int)config('plugins.lease-contract.file.max_file_size_upload')) {
+            if ($fileUpload->getSize() / 1024 > (int)config('plugins.{-module}.file.max_file_size_upload')) {
                 return [
                     'error'   => true,
-                    'message' => trans('plugins/lease-contract::media.file_too_big',
-                        ['size' => config('plugins.lease-contract.file.max_file_size_upload')]),
+                    'message' => trans('plugins/core::media.file_too_big',
+                        ['size' => config('plugins.core.file.max_file_size_upload')]),
                 ];
             }
 
             $fileExtension = $fileUpload->getClientOriginalExtension();
 
-            if (!in_array($fileExtension, explode(',', config('plugins.lease-contract.file.allowed_mime_types')))) {
+            if (!in_array($fileExtension, explode(',', config('plugins.{-module}.file.allowed_mime_types')))) {
                 return [
                     'error'   => true,
-                    'message' => trans('plugins/lease-contract::media.can_not_detect_file_type'),
+                    'message' => trans('plugins/core::media.can_not_detect_file_type'),
                 ];
             }
 
-            $folderPath = $folderPath . '/' . $leaseContract->id;
+            $folderPath = $folderPath . '/' . ${+module}->id;
 
-            $file->name = $this->leaseContractFileRepository->createName(File::name($fileUpload->getClientOriginalName()), $folderPath);
+            $file->name = $this->{+name}Repository->createName(File::name($fileUpload->getClientOriginalName()), $folderPath);
 
-            $fileName = $this->leaseContractFileRepository->createSlug($file->name, $fileExtension, Storage::path($folderPath));
+            $fileName = $this->{+name}Repository->createSlug($file->name, $fileExtension, Storage::path($folderPath));
 
             $filePath = $fileName;
 
@@ -168,7 +168,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
             if (empty($data['mime_type'])) {
                 return [
                     'error'   => true,
-                    'message' => trans('plugins/lease-contract::media.can_not_detect_file_type'),
+                    'message' => trans('plugins/core::media.can_not_detect_file_type'),
                 ];
             }
 
@@ -177,11 +177,11 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
             $file->mime_type = $data['mime_type'];
             $file->folder = $folderPath;
             $file->user_id = Auth::check() ? Auth::user()->getKey() : 0;
-            $file->lease_contract_id = $leaseContract->id;
-            $this->leaseContractFileRepository->createOrUpdate($file);
+            $file->{module}_id = ${+module}->id;
+            $this->{+name}Repository->createOrUpdate($file);
 
             if ($file->canGenerateThumbnails()) {
-                foreach (config('plugins.lease-contract.file.sizes', []) as $size) {
+                foreach (config('plugins.{-module}.file.sizes', []) as $size) {
                     $readableSize = explode('x', $size);
 
                     $this->thumbnailService
@@ -209,24 +209,24 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
      * @param  [type] $listFile [description]
      * @return [type]           [description]
      */
-    public function deleteFile(Request $request, LeaseContract $leaseContract)
+    public function deleteFile(Request $request, {Module} ${+module})
     {
         try{
-            $listFile = $leaseContract->contractFile;
+            $listFile = ${+module}->{+name};
             if(!empty($listFile))
             {
                 foreach ($listFile as $file) {
-                    $leaseContractFile = $this->leaseContractFileRepository->findOrFail($file->id);
-                    if(isset($leaseContractFile))
+                    ${+name} = $this->{+name}Repository->findOrFail($file->id);
+                    if(isset(${+name}))
                     {
-                        if($this->uploadManager->deleteFile($leaseContractFile->folder . '/' . $leaseContractFile->url))
+                        if($this->uploadManager->deleteFile(${+name}->folder . '/' . ${+name}->url))
                         {
-                            $this->leaseContractFileRepository->deleteBy(['id' => $leaseContractFile->id, 'lease_contract_id' => $leaseContract->id]);
+                            $this->{+name}Repository->deleteBy(['id' => ${+name}->id, '{module}_id' => ${+module}->id]);
                         }
                     }
                 }
 
-                $this->uploadManager->deleteDirectory($leaseContractFile->folder);
+                $this->uploadManager->deleteDirectory(${+name}->folder);
             }
 
         } catch (Exception $ex) {

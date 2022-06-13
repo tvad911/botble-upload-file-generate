@@ -7,7 +7,7 @@ use File;
 use Illuminate\Support\Str;
 use League\Flysystem\FileNotFoundException;
 
-class PluginMakeUploadFileCommand extends BaseMakeCommand
+class PluginUploadFileCommand extends BaseMakeCommand
 {
     /**
      * The console command signature.
@@ -52,22 +52,24 @@ class PluginMakeUploadFileCommand extends BaseMakeCommand
         $this->renameFiles($name, $location);
         $this->searchAndReplaceInFiles($name, $location);
         $this->line('------------------');
-        $this->line('<info>The CRUD for plugin </info> <comment>' . $plugin . '</comment> <info>was created in</info> <comment>' . $location . '</comment><info>, customize it!</info>');
+        $this->line('<info>The upload file CRUD for plugin </info> <comment>' . $plugin . '</comment> <info>was created in</info> <comment>' . $location . '</comment><info>, customize it!</info>');
         $this->line('------------------');
         $this->call('cache:clear');
 
         $replacements = [
             'config/permissions.stub',
+            'config/generate.stub',
             'helpers/constants.stub',
-            'routes/web.stub',
+            'src/Model/{Module}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
+            'webpack.mix.js.stub',
         ];
 
         foreach ($replacements as $replacement) {
-            $this->line('Add below code into ' . $this->replacementSubModule(null,
+            $this->line('Add below code into ' . $this->replacementUploadFileModule(null,
                     str_replace(base_path(), '', $location) . '/' . $replacement));
-            $this->info($this->replacementSubModule($replacement));
+            $this->info($this->replacementUploadFileModule($replacement));
         }
 
         return 0;
@@ -78,7 +80,7 @@ class PluginMakeUploadFileCommand extends BaseMakeCommand
      */
     public function getStub(): string
     {
-        return __DIR__ . '/../../../dev-tool/stubs/module';
+        return __DIR__ . '/../../stubs/upload-file';
     }
 
     /**
@@ -88,9 +90,12 @@ class PluginMakeUploadFileCommand extends BaseMakeCommand
     {
         $files = [
             'config/permissions.stub',
+            'config/generate.stub',
             'helpers/constants.stub',
-            'routes/web.stub',
+            'src/Model/{Module}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
+            'src/Plugin.stub',
+            'webpack.mix.js.stub',
         ];
 
         foreach ($files as $file) {
@@ -103,12 +108,12 @@ class PluginMakeUploadFileCommand extends BaseMakeCommand
      * @param null $content
      * @return string
      */
-    protected function replacementSubModule(string $file = null, $content = null): string
+    protected function replacementUploadFileModule(string $file = null, $content = null): string
     {
         $name = strtolower($this->argument('name'));
 
         if ($file && empty($content)) {
-            $content = file_get_contents($this->getStub() . '/../sub-module/' . $file);
+            $content = file_get_contents($this->getStub() . '/../upload-file/' . $file);
         }
 
         $replace = $this->getReplacements($name) + $this->baseReplacements($name);

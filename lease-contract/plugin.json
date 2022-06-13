@@ -1,9 +1,0 @@
-{
-    "name": "Lease Contract",
-    "namespace": "Botble\\LeaseContract\\",
-    "provider": "Botble\\LeaseContract\\Providers\\LeaseContractServiceProvider",
-    "author": "Change Interaction",
-    "url": "https://changeinteraction.com",
-    "version": "1.0",
-    "description": "The description for module lease contract"
-}

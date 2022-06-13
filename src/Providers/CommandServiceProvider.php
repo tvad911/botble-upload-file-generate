@@ -2,7 +2,7 @@
 
 namespace Botble\UploadFileGenerator\Providers;
 
-use Botble\UploadFileGenerator\Commands\PluginMakeUploadFileCommand;
+use Botble\UploadFileGenerator\Commands\PluginUploadFileCommand;
 use Illuminate\Support\ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider
@@ -11,7 +11,7 @@ class CommandServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                PluginMakeUploadFileCommand::class,
+                PluginUploadFileCommand::class,
             ]);
         }
     }

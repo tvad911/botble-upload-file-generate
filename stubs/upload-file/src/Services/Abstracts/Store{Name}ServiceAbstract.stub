@@ -3,7 +3,7 @@
 namespace Botble\{Module}\Services\Abstracts;
 
 use Botble\{Module}\Models\{Module};
-use Botble\{Module}\Models\{Module}File;
+use Botble\{Module}\Models\{Name};
 use Botble\{Module}\Repositories\Interfaces\{Name}Interface;
 use Illuminate\Http\Request;
 use Botble\Media\Services\UploadsManager;
@@ -43,22 +43,22 @@ abstract class Store{Name}ServiceAbstract
 
     /**
      * @param Request $request
-     * @param LeaseContract $leaseContract
+     * @param {Module} ${+module}
      * @return mixed
      */
-    abstract public function execute(Request $request, LeaseContract $leaseContract);
+    abstract public function execute(Request $request, {Module} ${+module});
 
     /**
      * @param Request $request
-     * @param LeaseContract $leaseContract
+     * @param {Module} ${+module}
      * @return mixed
      */
-    abstract public function handleUpdate(Request $request, LeaseContract $leaseContract);
+    abstract public function handleUpdate(Request $request, {Module} ${+module});
 
     /**
      * @param Request $request
-     * @param LeaseContract $leaseContract
+     * @param {Module} ${+module}
      * @return mixed
      */
-    abstract public function deleteFile(Request $request, LeaseContract $leaseContract);
+    abstract public function deleteFile(Request $request, {Module} ${+module});
 }

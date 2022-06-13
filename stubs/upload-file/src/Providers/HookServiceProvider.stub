@@ -28,7 +28,7 @@ class HookServiceProvider extends ServiceProvider
                 ->addScriptsDirectly(['vendor/core/plugins/{name}/js/{name}-admin.js'])
                 ->addScripts(['sortable']);
 
-            MetaBox::addMetaBox('{name}_wrap', trans('plugins/{module}::{module}.{module}_file'), [$this, '{+name}MetaField'],
+            MetaBox::addMetaBox('{name}_wrap', trans('plugins/{-module}::{-module}.{-module}_file'), [$this, '{+name}MetaField'],
                 get_class($object), $context, 'default');
         }
     }
@@ -42,9 +42,9 @@ class HookServiceProvider extends ServiceProvider
         $value = null;
         $args = func_get_args();
         if ($args[0] && $args[0]->id) {
-            $value = lease_contract_file_data($args[0]);
+            $value = {name}_data($args[0]);
         }
 
-        return view('plugins/{module}::{name}-box', compact('value'))->render();
+        return view('plugins/{-module}::{-name}-box', compact('value'))->render();
     }
 }

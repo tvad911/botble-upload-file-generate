@@ -1,10 +1,10 @@
 <?php
 
-namespace Botble\LeaseContract\Repositories\Interfaces;
+namespace Botble\{Module}\Repositories\Interfaces;
 
 use Botble\Support\Repositories\Interfaces\RepositoryInterface;
 
-interface LeaseContractFileInterface extends RepositoryInterface
+interface {Name}Interface extends RepositoryInterface
 {
 	/**
      * {@inheritdoc}

@@ -1,11 +1,11 @@
 <?php
 
-namespace Botble\LeaseContract\Repositories\Caches;
+namespace Botble\{Module}\Repositories\Caches;
 
 use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
-use Botble\LeaseContract\Repositories\Interfaces\LeaseContractFileInterface;
+use Botble\{Module}\Repositories\Interfaces\{Name}Interface;
 
-class LeaseContractFileCacheDecorator extends CacheAbstractDecorator implements LeaseContractFileInterface
+class {Name}CacheDecorator extends CacheAbstractDecorator implements {Name}Interface
 {
 	/**
      * {@inheritdoc}

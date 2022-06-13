@@ -1,13 +1,13 @@
 <?php
 
-namespace Botble\LeaseContract\Providers;
+namespace Botble\{Module}\Providers;
 
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
-use Botble\LeaseContract\Listeners\CreatedContentListener;
-use Botble\LeaseContract\Listeners\DeletedContentListener;
-use Botble\LeaseContract\Listeners\UpdatedContentListener;
+use Botble\{Module}\Listeners\CreatedContentListener;
+use Botble\{Module}\Listeners\DeletedContentListener;
+use Botble\{Module}\Listeners\UpdatedContentListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
