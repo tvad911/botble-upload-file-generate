@@ -92,10 +92,10 @@ class PluginUploadFileCommand extends BaseMakeCommand
             'config/permissions.stub',
             'config/generate.stub',
             'helpers/constants.stub',
-            'src/Model/{Module}.stub',
-            'src/Providers/{Module}ServiceProvider.stub',
+            // 'src/Model/{Module}.stub',
+            // 'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
-            'webpack.mix.js.stub',
+            // 'webpack.mix.js.stub',
         ];
 
         foreach ($files as $file) {
@@ -113,7 +113,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $name = strtolower($this->argument('name'));
 
         if ($file && empty($content)) {
-            $content = file_get_contents($this->getStub() . '/../upload-file/' . $file);
+            $content = file_get_contents($this->getStub() . '/' . $file);
         }
 
         $replace = $this->getReplacements($name) + $this->baseReplacements($name);

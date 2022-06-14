@@ -1,0 +1,9 @@
+{
+    "name": "Upload file generate",
+    "namespace": "Botble\\UploadFileGenerator\\",
+    "provider": "Botble\\UploadFileGenerator\\Providers\\UploadFileGeneratorServiceProvider",
+    "author": "Botble Technologies",
+    "url": "https://botble.com",
+    "version": "5.8",
+    "description": "Upload file generate"
+}
