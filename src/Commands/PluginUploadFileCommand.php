@@ -59,7 +59,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $replacements = [
             'config/permissions.stub',
             'helpers/constants.stub',
-            'src/Models/{Module}.stub',
+            'src/Models/{Base}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
             'webpack.mix.js.stub',
@@ -90,7 +90,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $files = [
             'config/permissions.stub',
             'helpers/constants.stub',
-            'src/Models/{Module}.stub',
+            'src/Models/{Base}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
             'webpack.mix.js.stub',
@@ -134,6 +134,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
     public function getReplacements(string $replaceText): array
     {
         $module = strtolower($this->argument('plugin'));
+        $base = strtolower($this->argument('base'));
 
         return [
             '{type}'     => 'plugin',
@@ -146,6 +147,15 @@ class PluginUploadFileCommand extends BaseMakeCommand
             '{-modules}' => Str::plural($module),
             '{MODULE}'   => strtoupper(Str::snake(str_replace('-', '_', $module))),
             '{Module}'   => ucfirst(Str::camel($module)),
+
+            '{-base}'  => strtolower($base),
+            '{base}'   => Str::snake(str_replace('-', '_', $base)),
+            '{+base}'  => Str::camel($base),
+            '{bases}'  => Str::plural(Str::snake(str_replace('-', '_', $base))),
+            '{Bases}'  => ucfirst(Str::plural(Str::snake(str_replace('-', '_', $base)))),
+            '{-bases}' => Str::plural($base),
+            '{BASE}'   => strtoupper(Str::snake(str_replace('-', '_', $base))),
+            '{Base}'   => ucfirst(Str::camel($base)),
         ];
     }
 }
