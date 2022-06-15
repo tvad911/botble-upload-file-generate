@@ -2,7 +2,7 @@
 /**
  * @return \Illuminate\Database\Eloquent\Relations\HasMany
  */
-public function {+module}()
+public function {+name}()
 {
     return $this->hasMany('Botble\{Module}\Models\{Name}', '{name}_id');
 }

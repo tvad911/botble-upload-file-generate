@@ -4,3 +4,7 @@ $this->app->bind(\Botble\{Module}\Repositories\Interfaces\{Name}Interface::class
         new \Botble\{Module}\Repositories\Eloquent\{Name}Repository(new \Botble\{Module}\Models\{Name})
     );
 });
+
+// Add into function boot()
+$this->app->register(UploadFileEventServiceProvider::class);
+$this->app->register(UploadFileHookServiceProvider::class);

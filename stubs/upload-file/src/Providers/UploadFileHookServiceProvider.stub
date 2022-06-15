@@ -6,7 +6,7 @@ use Assets;
 use Illuminate\Support\ServiceProvider;
 use MetaBox;
 
-class HookServiceProvider extends ServiceProvider
+class UploadFileHookServiceProvider extends ServiceProvider
 {
     /**
      * @throws \Throwable

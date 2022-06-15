@@ -1,0 +1,61 @@
+<?php
+
+use Botble\{Module}\Repositories\Interfaces\{Module}Interface;
+use Botble\{Module}\Repositories\Interfaces\{Name}Interface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+
+if (!function_exists('{name}_data')) {
+    /**
+     * @param Model $object
+     * @param array $select
+     * @return array
+     */
+    function {name}_data($object, array $with = [] ,array $select = ['id', '{-module}_id', 'name', 'folder', 'mime_type', 'size', 'url', 'options']): array
+    {
+        $list = app({Name}Interface::class)->allBy(['{-module}_id' => $object->id], $with, $select);
+        if (!empty($list)) {
+            return $list->toArray() ?? [];
+        }
+        return [];
+    }
+}
+
+if (!function_exists('get_{name}_thumbnail_image_file')) {
+    /**
+     * @param Model $object
+     * @param array $select
+     * @return array
+     */
+    function get_{name}_thumbnail_image_file($mime_type)
+    {
+        switch ($mime_type) {
+            case 'application/pdf':
+                return '{-module}/images/pdf.png';
+                break;
+
+            case 'application/msword':
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                return '{-module}/images/word.png';
+                break;
+
+            case 'application/vnd.ms-excel':
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                return '{-module}/images/excel.png';
+                break;
+
+            case 'application/zip':
+            case 'application/x-gzip':
+                return '{-module}/images/zip.png';
+                break;
+
+            case 'application/vnd.rar':
+                return '{-module}/images/rar.png';
+                break;
+
+            default:
+                return '';
+                break;
+        }
+    }
+}
