@@ -3,6 +3,6 @@
 return [
     // List supported modules or plugins
     'supported' => [
-        'Botble\{Module}\Models\{Name}',
+        'Botble\{Module}\Models\{Base}',
     ],
 ];

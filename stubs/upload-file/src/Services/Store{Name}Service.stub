@@ -2,7 +2,7 @@
 
 namespace Botble\{Module}\Services;
 
-use Botble\{Module}\Models\{Module};
+use Botble\{Module}\Models\{Base};
 use Botble\{Module}\Models\{Name}File;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -45,20 +45,20 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
      *
      * @return mixed|void
      */
-    public function handleUpdate(Request $request, {Module} ${+module})
+    public function handleUpdate(Request $request, {Base} ${+base})
     {
         /**
          * 1. If old file empty remove file
          */
         if (empty(json_decode($request->input('{name}')))) {
-            $files = $this->{+name}Repository->allBy(['{module}_id' => ${+module}->id]);
+            $files = $this->{+name}Repository->allBy(['{base}_id' => ${+base}->id]);
 
             if($files->isNotEmpty())
             {
                 foreach ($files as $file) {
                     if($this->uploadManager->deleteFile($file->folder . '/' . $file->url))
                     {
-                        $this->{+name}Repository->deleteBy(['id' => $file->id, '{module}_id' => ${+module}->id]);
+                        $this->{+name}Repository->deleteBy(['id' => $file->id, '{base}_id' => ${+base}->id]);
                     }
                 }
             }
@@ -74,7 +74,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
         {
             // 1. Update description
             foreach ($listFile as $item) {
-                $file = $this->{+name}Repository->getFirstBy(['id' => $item->id, '{module}_id' => ${+module}->id]);
+                $file = $this->{+name}Repository->getFirstBy(['id' => $item->id, '{base}_id' => ${+base}->id]);
                 if($file)
                 {
                     $file->options = $item->options;
@@ -84,13 +84,13 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
 
             // 2. Remove old file
             $arrFile = $listFile->pluck('id')->all();
-            $files = $this->{+name}Repository->allBy(['{module}_id' => ${+module}->id, ['id', 'not_in', $arrFile]]);
+            $files = $this->{+name}Repository->allBy(['{base}_id' => ${+base}->id, ['id', 'not_in', $arrFile]]);
             if($files->isNotEmpty())
             {
                 foreach ($files as $file) {
                     if($this->uploadManager->deleteFile($file->folder . '/' . $file->url))
                     {
-                        $this->{+name}Repository->deleteBy(['id' => $file->id, '{module}_id' => ${+module}->id]);
+                        $this->{+name}Repository->deleteBy(['id' => $file->id, '{base}_id' => ${+base}->id]);
                     }
                 }
             }
@@ -103,7 +103,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
         {
             foreach($request->file('{names}') as $file)
             {
-                $log = $this->handleUpload($file, '{modules}/{name}', ${+module});
+                $log = $this->handleUpload($file, '{modules}/{name}', ${+base});
                 if($log != null){
                     if(isset($log['message']))
                         Log::error($log['message']);
@@ -209,7 +209,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
      * @param  [type] $listFile [description]
      * @return [type]           [description]
      */
-    public function deleteFile(Request $request, {Module} ${+module})
+    public function deleteFile(Request $request, {Base} ${+base})
     {
         try{
             $listFile = ${+module}->{+name};
@@ -221,7 +221,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
                     {
                         if($this->uploadManager->deleteFile(${+name}->folder . '/' . ${+name}->url))
                         {
-                            $this->{+name}Repository->deleteBy(['id' => ${+name}->id, '{module}_id' => ${+module}->id]);
+                            $this->{+name}Repository->deleteBy(['id' => ${+name}->id, '{base}_id' => ${+base}->id]);
                         }
                     }
                 }

@@ -23,7 +23,7 @@ class {Name} extends BaseModel
      * @var array
      */
     protected $fillable = [
-        '{module}_id',
+        '{base}_id',
         'name',
         'folder',
         'mime_type',
@@ -33,11 +33,11 @@ class {Name} extends BaseModel
     ];
 
     /**
-     * Get the {module} that owns the file.
+     * Get the {base} that owns the file.
      */
-    public function {module}()
+    public function {base}()
     {
-        return $this->belongsTo('Botble\{Module}\Models\{Module}', '{module}_id');
+        return $this->belongsTo('Botble\{Module}\Models\{Base}', '{base}_id');
     }
 
     /**

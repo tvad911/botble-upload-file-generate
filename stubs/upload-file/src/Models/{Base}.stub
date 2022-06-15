@@ -1,0 +1,18 @@
+// Add this code into {Base} model
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\HasMany
+ */
+public function {+name}()
+{
+    return $this->hasMany('Botble\{Module}\Models\{Name}', '{base}_id');
+}
+
+// Add this code into ::boot function of {Base} model
+protected static function boot()
+{
+    parent::boot();
+
+    self::deleting(function ({Base} ${+base}) {
+        \{Name}::where('{base}_id', ${+base}->id)->delete();
+    });
+}

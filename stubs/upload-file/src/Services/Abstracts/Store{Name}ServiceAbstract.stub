@@ -2,7 +2,7 @@
 
 namespace Botble\{Module}\Services\Abstracts;
 
-use Botble\{Module}\Models\{Module};
+use Botble\{Module}\Models\{Base};
 use Botble\{Module}\Models\{Name};
 use Botble\{Module}\Repositories\Interfaces\{Name}Interface;
 use Illuminate\Http\Request;

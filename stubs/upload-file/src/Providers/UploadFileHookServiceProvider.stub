@@ -23,12 +23,12 @@ class UploadFileHookServiceProvider extends ServiceProvider
     public function add{Name}Box($context, $object)
     {
         if ($object && in_array(get_class($object),
-                config('plugins.{-name}.general.supported', [])) && $context == 'advanced') {
-            Assets::addStylesDirectly(['vendor/core/plugins/{name}/css/{name}-admin.css'])
-                ->addScriptsDirectly(['vendor/core/plugins/{name}/js/{name}-admin.js'])
+                config('plugins.{-module}.generate.supported', [])) && $context == 'advanced') {
+            Assets::addStylesDirectly(['vendor/core/plugins/{-module}/css/{name}-admin.css'])
+                ->addScriptsDirectly(['vendor/core/plugins/{-module}/js/{name}-admin.js'])
                 ->addScripts(['sortable']);
 
-            MetaBox::addMetaBox('{name}_wrap', trans('plugins/{-module}::{-module}.{-module}_file'), [$this, '{+name}MetaField'],
+            MetaBox::addMetaBox('{name}_wrap', trans('plugins/{-module}::{-name}.meta_title'), [$this, '{+name}MetaField'],
                 get_class($object), $context, 'default');
         }
     }

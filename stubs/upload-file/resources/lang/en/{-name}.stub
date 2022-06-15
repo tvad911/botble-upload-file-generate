@@ -5,6 +5,7 @@ return [
     'create' => 'New {++name}',
     'edit'   => 'Edit {++name}',
 
+    'meta_title'                          => '{Name}',
     'select_file'                         => 'Select file',
     'reset'                               => 'Reset',
     'update_file_description'             => 'Update',
@@ -12,4 +13,8 @@ return [
     'delete_file'                         => 'Delete file',
     'download_file'                       => 'Download',
     'button_add_image'                    => 'Add images',
+    'change_image'                        => 'Chaneg image',
+    'using_button'                        => 'Using button',
+    'choose_image'                        => 'Choose image',
+    'add_more_image'                      => 'Add more image',
 ];

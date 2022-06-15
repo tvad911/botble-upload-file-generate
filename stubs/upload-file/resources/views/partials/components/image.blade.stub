@@ -1,17 +1,17 @@
 <div class="list-photo-hover-overlay">
     <ul class="photo-overlay-actions">
         <li>
-            <a class="mr10 btn-trigger-download-object-file" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ __('Download') }}">
+            <a class="mr10 btn-trigger-download-object-file" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ trans('{types}/{-module}::{-name}.download_file') }}">
                 <i class="fa fa-edit"></i>
             </a>
         </li>
         <li>
-            <a class="mr10 btn-trigger-edit-object-file" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ __('Change Image') }}">
+            <a class="mr10 btn-trigger-edit-object-file" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ trans('{types}/{-module}::{-name}.change_image') }}">
                 <i class="fa fa-edit"></i>
             </a>
         </li>
         <li>
-            <a class="mr10 btn-trigger-remove-object-file" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ __('Change Image') }}">
+            <a class="mr10 btn-trigger-remove-object-file" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ trans('{types}/{-module}::{-name}.delete_file') }}">
                 <i class="fa fa-trash"></i>
             </a>
         </li>

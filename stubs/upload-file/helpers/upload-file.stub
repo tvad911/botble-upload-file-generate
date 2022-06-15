@@ -1,6 +1,6 @@
 <?php
 
-use Botble\{Module}\Repositories\Interfaces\{Module}Interface;
+use Botble\{Module}\Repositories\Interfaces\{Base}Interface;
 use Botble\{Module}\Repositories\Interfaces\{Name}Interface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -11,9 +11,9 @@ if (!function_exists('{name}_data')) {
      * @param array $select
      * @return array
      */
-    function {name}_data($object, array $with = [] ,array $select = ['id', '{-module}_id', 'name', 'folder', 'mime_type', 'size', 'url', 'options']): array
+    function {name}_data($object, array $with = [] ,array $select = ['id', '{-base}_id', 'name', 'folder', 'mime_type', 'size', 'url', 'options']): array
     {
-        $list = app({Name}Interface::class)->allBy(['{-module}_id' => $object->id], $with, $select);
+        $list = app({Name}Interface::class)->allBy(['{-base}_id' => $object->id], $with, $select);
         if (!empty($list)) {
             return $list->toArray() ?? [];
         }
