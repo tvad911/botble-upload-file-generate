@@ -21,17 +21,17 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
 {
     /**
      * @param Request $request
-     * @param {Module} ${+module}
+     * @param {Base} ${+base}
      *
      * @return mixed|void
      */
-    public function execute(Request $request, {Module} ${+module})
+    public function execute(Request $request, {Base} ${+base})
     {
         if($request->hasfile('{names}'))
         {
             foreach($request->file('{names}') as $file)
             {
-                $log = $this->handleUpload($file, '{modules}/{name}', ${+module});
+                $log = $this->handleUpload($file, '{modules}/{name}', ${+base});
                 if($log != null && isset($log['message'])){
                     Log::error($log['message']);
                 }
@@ -41,7 +41,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
 
     /**
      * @param Request $request
-     * @param {Module} ${+module}
+     * @param {Base} ${+base}
      *
      * @return mixed|void
      */

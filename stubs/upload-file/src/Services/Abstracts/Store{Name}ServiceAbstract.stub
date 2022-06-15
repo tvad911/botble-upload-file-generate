@@ -43,22 +43,22 @@ abstract class Store{Name}ServiceAbstract
 
     /**
      * @param Request $request
-     * @param {Module} ${+module}
+     * @param {Base} ${+base}
      * @return mixed
      */
-    abstract public function execute(Request $request, {Module} ${+module});
+    abstract public function execute(Request $request, {Base} ${+base});
 
     /**
      * @param Request $request
-     * @param {Module} ${+module}
+     * @param {Base} ${+base}
      * @return mixed
      */
-    abstract public function handleUpdate(Request $request, {Module} ${+module});
+    abstract public function handleUpdate(Request $request, {Base} ${+base});
 
     /**
      * @param Request $request
-     * @param {Module} ${+module}
+     * @param {Base} ${+base}
      * @return mixed
      */
-    abstract public function deleteFile(Request $request, {Module} ${+module});
+    abstract public function deleteFile(Request $request, {Base} ${+base});
 }
