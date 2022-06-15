@@ -14,7 +14,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
      *
      * @var string
      */
-    protected $signature = 'cms:plugin:make:upload-file-generate {plugin : The plugin name} {name : Model name}';
+    protected $signature = 'cms:plugin:make:upload-file-generate {plugin : The plugin name} {name : Model name} {base : Base model name}';
 
     /**
      * The console command description.
@@ -58,9 +58,8 @@ class PluginUploadFileCommand extends BaseMakeCommand
 
         $replacements = [
             'config/permissions.stub',
-            'config/generate.stub',
             'helpers/constants.stub',
-            'src/Model/{Module}.stub',
+            'src/Models/{Module}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
             'webpack.mix.js.stub',
@@ -90,12 +89,11 @@ class PluginUploadFileCommand extends BaseMakeCommand
     {
         $files = [
             'config/permissions.stub',
-            'config/generate.stub',
             'helpers/constants.stub',
-            // 'src/Model/{Module}.stub',
-            // 'src/Providers/{Module}ServiceProvider.stub',
+            'src/Models/{Module}.stub',
+            'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
-            // 'webpack.mix.js.stub',
+            'webpack.mix.js.stub',
         ];
 
         foreach ($files as $file) {
@@ -119,6 +117,15 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $replace = $this->getReplacements($name) + $this->baseReplacements($name);
 
         return str_replace(array_keys($replace), $replace, $content);
+    }
+
+    /**
+     * @param string $replaceText
+     * @return array
+     */
+    public function baseReplacements(string $replaceText): array
+    {
+        return ['.js.stub' => '.js'] + ['.sass.stub' => '.sass']  + parent::baseReplacements($replaceText);
     }
 
     /**
