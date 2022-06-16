@@ -118,7 +118,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
      * @param string $path
      * @return JsonResponse|array
      */
-    public function handleUpload($fileUpload, $folderPath = '{modules}/{name}', ${+module})
+    public function handleUpload($fileUpload, $folderPath = '{modules}/{name}', ${+base})
     {
         if (!$fileUpload) {
             return [
@@ -147,7 +147,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
                 ];
             }
 
-            $folderPath = $folderPath . '/' . ${+module}->id;
+            $folderPath = $folderPath . '/' . ${+base}->id;
 
             $file->name = $this->{+name}Repository->createName(File::name($fileUpload->getClientOriginalName()), $folderPath);
 
@@ -177,7 +177,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
             $file->mime_type = $data['mime_type'];
             $file->folder = $folderPath;
             $file->user_id = Auth::check() ? Auth::user()->getKey() : 0;
-            $file->{module}_id = ${+module}->id;
+            $file->{base}_id = ${+base}->id;
             $this->{+name}Repository->createOrUpdate($file);
 
             if ($file->canGenerateThumbnails()) {
@@ -212,7 +212,7 @@ class Store{Name}Service extends Store{Name}ServiceAbstract
     public function deleteFile(Request $request, {Base} ${+base})
     {
         try{
-            $listFile = ${+module}->{+name};
+            $listFile = ${+base}->{+name};
             if(!empty($listFile))
             {
                 foreach ($listFile as $file) {

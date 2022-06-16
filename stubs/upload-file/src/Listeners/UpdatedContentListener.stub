@@ -2,7 +2,7 @@
 
 namespace Botble\{Module}\Listeners;
 
-use Botble\Base\Events\DeletedContentEvent;
+use Botble\Base\Events\UpdatedContentEvent;
 use Exception;
 use Botble\{Module}\Services\Store{Name}Service;
 
@@ -19,7 +19,7 @@ class UpdatedContentListener
     {
         try {
             if ($event->data && in_array(get_class($event->data),
-                config('plugins.{-module}.general.supported', []))) {
+                config('plugins.{-module}.generate.supported', []))) {
                 app(Store{Name}Service::class)->handleUpdate($event->request, $event->data);
             }
         } catch (Exception $exception) {

@@ -19,7 +19,7 @@ class DeletedContentListener
     {
         try {
             if ($event->data && in_array(get_class($event->data),
-                config('plugins.{-module}.general.supported', []))) {
+                config('plugins.{-module}.generate.supported', []))) {
                 app(Store{Name}Service::class)->deleteFile($event->request, $event->data);
             }
         } catch (Exception $exception) {

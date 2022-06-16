@@ -59,6 +59,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $replacements = [
             'config/permissions.stub',
             'helpers/constants.stub',
+            'src/Form/{Base}.stub',
             'src/Models/{Base}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
@@ -90,6 +91,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $files = [
             'config/permissions.stub',
             'helpers/constants.stub',
+            'src/Form/{Base}.stub',
             'src/Models/{Base}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',

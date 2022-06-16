@@ -5,7 +5,7 @@ return [
     'create' => 'New {++name}',
     'edit'   => 'Edit {++name}',
 
-    'meta_title'                          => '{Name}',
+    'meta_title'                          => '{++Names}',
     'select_file'                         => 'Select file',
     'reset'                               => 'Reset',
     'update_file_description'             => 'Update',

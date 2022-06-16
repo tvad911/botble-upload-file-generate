@@ -1,5 +1,5 @@
 // Add this code to webpack.mix.js
-.sass(source + '/assets/sass/{-name}-admin.scss', dist + '/css')
-.js(source + '/assets/js/{-name}-admin.js', dist + '/js')
+.sass(source + '/resources/assets/sass/{-name}-admin.scss', dist + '/css')
+.js(source + '/resources/assets/js/{-name}-admin.js', dist + '/js')
 
 .copy(source + '/public/images', dist + '/images')

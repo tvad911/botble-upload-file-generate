@@ -6,5 +6,7 @@ $this->app->bind(\Botble\{Module}\Repositories\Interfaces\{Name}Interface::class
 });
 
 // Add into function boot()
+Add 'generate', 'file' into ->loadAndPublishConfigurations(['generate', 'file']) after $this->setNamespace
+
 $this->app->register(UploadFileEventServiceProvider::class);
 $this->app->register(UploadFileHookServiceProvider::class);

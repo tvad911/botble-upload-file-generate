@@ -10,7 +10,7 @@
                         <div class="{-name}_wrapper">
                             @php
                                 $mime_type = Arr::get($item, 'mime_type');
-                                $url = get_{module}_thumbnail_image_file($mime_type);
+                                $url = get_{name}_thumbnail_image_file($mime_type);
                             @endphp
                             @if(empty($url))
                                 <img src="{{ RvMedia::getImageUrl(Arr::get($item, 'folder') . '/' . Arr::get($item, 'url'), 'thumb') }}" alt="{{ trans('{types}/{-module}::{-name}.name') }}">

@@ -24,8 +24,8 @@ class UploadFileHookServiceProvider extends ServiceProvider
     {
         if ($object && in_array(get_class($object),
                 config('plugins.{-module}.generate.supported', [])) && $context == 'advanced') {
-            Assets::addStylesDirectly(['vendor/core/plugins/{-module}/css/{name}-admin.css'])
-                ->addScriptsDirectly(['vendor/core/plugins/{-module}/js/{name}-admin.js'])
+            Assets::addStylesDirectly(['vendor/core/plugins/{-module}/css/{-name}-admin.css'])
+                ->addScriptsDirectly(['vendor/core/plugins/{-module}/js/{-name}-admin.js'])
                 ->addScripts(['sortable']);
 
             MetaBox::addMetaBox('{name}_wrap', trans('plugins/{-module}::{-name}.meta_title'), [$this, '{+name}MetaField'],

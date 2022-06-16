@@ -17,7 +17,7 @@ class {Name} extends BaseModel
      *
      * @var string
      */
-    protected $table = '{-names}';
+    protected $table = '{names}';
 
     /**
      * @var array

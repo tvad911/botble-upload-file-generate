@@ -61,8 +61,8 @@ $(document).ready(function () {
         $('#{name}-data').val(JSON.stringify(items));
     };
 
-    var list-files-{-name} = $('.list-files-{-name}');
-    var edit_{-name}_modal = $('#edit-file-item');
+    var list_files_{name} = $('.list-files-{-name}');
+    var edit_{name}_modal = $('#edit-file-item');
 
     $('.reset-file').on('click', function (event) {
         event.preventDefault();
@@ -71,7 +71,7 @@ $(document).ready(function () {
         $(this).addClass('hidden');
     });
 
-    list-files-{-name}.on('click', '.file-{-name}-item', function () {
+    list_files_{name}.on('click', '.file-{-name}-item', function () {
         var id = $(this).data('id');
         var folder = $(this).data('folder');
         var url = $(this).data('url');
@@ -79,27 +79,27 @@ $(document).ready(function () {
         $('#update-file-item').data('id', id);
         $('#file-item-description').val($(this).data('options'));
         $('#download-file-item').data('link', `${folder}/${url}`);
-        edit_{-name}_modal.modal('show');
+        edit_{name}_modal.modal('show');
     });
 
-    edit_{-name}_modal.on('click', '#delete-file-item', function (event) {
+    edit_{name}_modal.on('click', '#delete-file-item', function (event) {
         event.preventDefault();
-        edit_{-name}_modal.modal('hide');
-        list-files-{-name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').remove();
+        edit_{name}_modal.modal('hide');
+        list_files_{name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').remove();
         updateItems();
-        if (list-files-{-name}.find('.file-{-name}-item').length === 0) {
+        if (list_files_{name}.find('.file-{-name}-item').length === 0) {
             $('.reset-file').addClass('hidden');
         }
     });
 
-    edit_{-name}_modal.on('click', '#update-file-item', function (event) {
+    edit_{name}_modal.on('click', '#update-file-item', function (event) {
         event.preventDefault();
-        edit_{-name}_modal.modal('hide');
-        list-files-{-name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').data('options', $('#file-item-description').val());
+        edit_{name}_modal.modal('hide');
+        list_files_{name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').data('options', $('#file-item-description').val());
         updateItems();
     });
 
-    edit_{-name}_modal.on('click', '#download-file-item', function(event)
+    edit_{name}_modal.on('click', '#download-file-item', function(event)
     {
         event.preventDefault();
         var base = $(this).data('base');
