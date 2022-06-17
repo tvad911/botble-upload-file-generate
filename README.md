@@ -97,3 +97,12 @@ Add below code into \platform/plugins\blog/webpack.mix.js
 5. Tiến hành deactive and reactive lại module được generate code upload file.
 6. Tiến hành chạy ``npm run dev`` để build js, sass và publish file về folder public.
 7. Tiến hành kiểm tra xem chạy ổn chưa.
+
+------------------
+## Một số lưu ý:
+
+1. Version này dựa trên ý tưởng RVMedia của Botble, được xây dựng thành plugins hỗ trợ tự tạo code nhanh hơn.
+2. Phần code này giao diện khá là đơn giản, không có preview image, xóa khỏi danh sách file trước khi upload lên. 
+--> Phần này sẽ update sau khi mình tìm được đoạn code cũ.
+3. Vì là upload theo form nên chỉ nên upload file nhỏ, không có ajax, không sử dụng chunk upload.
+--> hi vọng có bạn nào có thời gian cải thiện giúp.
