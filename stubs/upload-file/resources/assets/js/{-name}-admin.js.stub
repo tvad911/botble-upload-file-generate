@@ -102,9 +102,9 @@ $(document).ready(function () {
     edit_{name}_modal.on('click', '#download-file-item', function(event)
     {
         event.preventDefault();
-        var base = $(this).data('base');
+        var url = $(this).data('base');
         var link = $(this).data('link');
-        var valFileDownloadPath = `${base}/storage/${link}`;
+        var valFileDownloadPath = `${url}/storage/${link}`;
         window.open(valFileDownloadPath , '_blank');
     });
 });
