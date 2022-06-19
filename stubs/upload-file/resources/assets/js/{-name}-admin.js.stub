@@ -7,16 +7,63 @@ $(document).ready(function () {
         $("#{names}:hidden").trigger('click');
     });
 
+    var arrFiles = [];
+    var countArr = 0;
+    var {base}Url = $('#{base}Url').val();
+
     $('input#{names}').change(function(){
         var files = $(this)[0].files;
 
-        $('.count-{-name}').text(`(${files.length} file select)`);
+        $.each(files, function (index, file) {
+
+            if(!findFile(file)){
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var img = new Image;
+
+                    var urlImg = get_{name}_thumbnail_image_file(file.type);
+                    if(urlImg == undefined || urlImg == null || urlImg == '')
+                    {
+                        var html = `<div class="col-md-2 col-sm-3 col-4 file-{-name}-item-preview" data-name="${ escape(file.name) }">
+                            <div class="{name}_wrapper">
+                                <img src="${ e.target.result }" alt="${ escape(file.name) }" data-id="${ file.name }">
+                            </div>
+                        </div>`;
+                    }
+                    else
+                    {
+                            var html = `<div class="col-md-2 col-sm-3 col-4 file-{-name}-item-preview" data-name="${ escape(file.name) }">
+                            <div class="{name}_wrapper">
+                                <img src="${ {base}Url + urlImg }" alt="${ escape(file.name) }" data-id="${ file.name }">
+                            </div>
+                        </div>`;
+                    }
+
+                    $('.list-files-{-name} .row').append(html);
+                };
+                reader.readAsDataURL(file);
+
+                arrFiles.push(file);
+                countArr++;
+            }
+            else{
+                toastr.error('File was exist, please try chose other', 'Error');
+            }
+        });
+
+        initSortable();
+
+        $('.count-{-name}').text(`(${countArr} file select)`);
+        $('.reset-file').removeClass('hidden');
+
+        $('input#{names}')[0].files = fileListItems(arrFiles);
     });
 
     var initSortable = function () {
         let el = document.getElementById('list-files-items');
         Sortable.create(el, {
-            group: 'contract_files', // or { name: "...", pull: [true, false, clone], put: [true, false, array] }
+            group: '{names}', // or { name: "...", pull: [true, false, clone], put: [true, false, array] }
             sort: true, // sorting inside list
             delay: 0, // time in milliseconds to define when the sorting should start
             disabled: false, // Disables the sortable if set to true.
@@ -47,7 +94,6 @@ $(document).ready(function () {
     var updateItems = function () {
         let items = [];
         $.each($('.file-{-name}-item'), (index, widget) => {
-            //$(widget).data('id', index);
             items.push({
                 id: $(widget).data('id'),
                 name: $(widget).data('name'),
@@ -61,50 +107,118 @@ $(document).ready(function () {
         $('#{name}-data').val(JSON.stringify(items));
     };
 
-    var list_files_{name} = $('.list-files-{-name}');
-    var edit_{name}_modal = $('#edit-file-item');
+    var listFile{Name} = $('.list-files-{-name}');
+    var edit{Name}Modal = $('#edit-file-item');
 
     $('.reset-file').on('click', function (event) {
         event.preventDefault();
         $('.list-files-{-name} .file-{-name}-item').remove();
         updateItems();
+
+        $('.list-files-{-name} .file-{-name}-item-preview').remove();
+        countArr = 0;
+        $('.count-{-name}').text(`(${countArr} file select)`);
+        arrFiles = [];
+        $('input#{names}')[0].files = fileListItems(arrFiles);
         $(this).addClass('hidden');
     });
 
-    list_files_{name}.on('click', '.file-{-name}-item', function () {
+    listFile{Name}.on('click', '.file-{-name}-item', function () {
         var id = $(this).data('id');
-        var folder = $(this).data('folder');
-        var url = $(this).data('url');
         $('#delete-file-item').data('id', id);
         $('#update-file-item').data('id', id);
         $('#file-item-description').val($(this).data('options'));
-        $('#download-file-item').data('link', `${folder}/${url}`);
-        edit_{name}_modal.modal('show');
+        edit{Name}Modal.modal('show');
     });
 
-    edit_{name}_modal.on('click', '#delete-file-item', function (event) {
+    listFile{Name}.on('click', '.file-{-name}-item-preview', function (event) {
         event.preventDefault();
-        edit_{name}_modal.modal('hide');
-        list_files_{name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').remove();
-        updateItems();
-        if (list_files_{name}.find('.file-{-name}-item').length === 0) {
+        var name = $(this).data('name');
+        $(this).remove();
+
+        var removeIndex = arrFiles.map(function(item) { return item.name; }).indexOf(name);
+        // remove object
+        arrFiles.splice(removeIndex, 1);
+
+        countArr--;
+        $('.count-{-name}').text(`(${countArr} file select)`);
+        $('input#{names}')[0].files = fileListItems(arrFiles);
+
+        if (listFile{Name}.find('.file-{-name}-item').length === 0 && listFile{Name}.find('.file-{-name}-item-preview').length === 0) {
             $('.reset-file').addClass('hidden');
         }
     });
 
-    edit_{name}_modal.on('click', '#update-file-item', function (event) {
+    edit{Name}Modal.on('click', '#delete-file-item', function (event) {
         event.preventDefault();
-        edit_{name}_modal.modal('hide');
-        list_files_{name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').data('options', $('#file-item-description').val());
+        edit{Name}Modal.modal('hide');
+        listFile{Name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').remove();
+        updateItems();
+        if (listFile{Name}.find('.file-{-name}-item').length === 0 && listFile{Name}.find('.file-{-name}-item-preview').length === 0) {
+            $('.reset-file').addClass('hidden');
+        }
+    });
+
+    edit{Name}Modal.on('click', '#update-file-item', function (event) {
+        event.preventDefault();
+        edit{Name}Modal.modal('hide');
+        listFile{Name}.find('.file-{-name}-item[data-id=' + $(this).data('id') + ']').data('options', $('#file-item-description').val());
         updateItems();
     });
 
-    edit_{name}_modal.on('click', '#download-file-item', function(event)
+    /**
+     * @params {array} files List of file items
+     * @return FileList
+     */
+    var fileListItems = function (files) {
+        var b = new ClipboardEvent("").clipboardData || new DataTransfer()
+        for (var i = 0, leng = files.length; i < leng; i++)
+        {
+            b.items.add(files[i]);
+        }
+
+        return b.files;
+    }
+
+    function findFile(file) {
+        return arrFiles.find(function(existingFile) {
+            return (
+                existingFile.name         === file.name &&
+                existingFile.lastModified === file.lastModified &&
+                existingFile.size         === file.size &&
+                existingFile.type         === file.type
+            )
+        });
+    }
+
+    function get_{name}_thumbnail_image_file(mimeType)
     {
-        event.preventDefault();
-        var url = $(this).data('base');
-        var link = $(this).data('link');
-        var valFileDownloadPath = `${url}/storage/${link}`;
-        window.open(valFileDownloadPath , '_blank');
-    });
+        switch (mimeType) {
+            case 'application/pdf':
+                return '{-module}/images/pdf.png';
+                break;
+
+            case 'application/msword':
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                return '{-module}/images/word.png';
+                break;
+
+            case 'application/vnd.ms-excel':
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                return '{-module}/images/excel.png';
+                break;
+
+            case 'application/x-zip-compressed':
+                return '{-module}/images/zip.png';
+                break;
+
+            case 'application/vnd.rar':
+                return '{-module}/images/rar.png';
+                break;
+
+            default:
+                return '';
+                break;
+        }
+    }
 });
