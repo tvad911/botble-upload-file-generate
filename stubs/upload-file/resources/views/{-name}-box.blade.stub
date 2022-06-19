@@ -4,6 +4,7 @@
     <p class="count-{-name}"></p>
     <div class="list-files-{-name}">
         <div class="row" id="list-files-items">
+            <input id="{base}Url" type="hidden" value="{!! config('url') . '/vendor/core/plugins/' !!}">
             @if (!empty($value))
                 @foreach ($value as $key => $item)
                     <div class="col-md-2 col-sm-3 col-4 file-{-name}-item" data-id="{{ Arr::get($item, 'id') }}" data-img="{{ Arr::get($item, 'img') }}" data-options="{{ Arr::get($item, 'options') }}" data-id="{{ Arr::get($item, 'id') }}" data-name="{{ Arr::get($item, 'name') }}" data-folder="{{ Arr::get($item, 'folder') }}" data-mimetype="{{ Arr::get($item, 'mime_type') }}" data-url="{{ Arr::get($item, 'url') }}">

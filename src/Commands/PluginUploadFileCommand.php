@@ -59,7 +59,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $replacements = [
             'config/permissions.stub',
             'helpers/constants.stub',
-            'src/Form/{Base}.stub',
+            'src/Forms/{Base}Form.stub',
             'src/Models/{Base}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
@@ -91,7 +91,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
         $files = [
             'config/permissions.stub',
             'helpers/constants.stub',
-            'src/Form/{Base}.stub',
+            'src/Forms/{Base}Form.stub',
             'src/Models/{Base}.stub',
             'src/Providers/{Module}ServiceProvider.stub',
             'src/Plugin.stub',
@@ -127,7 +127,7 @@ class PluginUploadFileCommand extends BaseMakeCommand
      */
     public function baseReplacements(string $replaceText): array
     {
-        return ['.js.stub' => '.js'] + ['.sass.stub' => '.sass']  + parent::baseReplacements($replaceText);
+        return ['.js.stub' => '.js'] + ['.scss.stub' => '.scss']  + parent::baseReplacements($replaceText);
     }
 
     /**
