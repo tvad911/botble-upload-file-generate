@@ -53,3 +53,11 @@
     </div>
 </div>
 <!-- end Modal -->
+
+<script type="text/javascript">
+    "use strict";
+
+    var {Name} = {Name} || {};
+
+    {Name}.languages = JSON.parse('{!! addslashes(json_encode(trans('plugins/{-module}::{-name}'))) !!}');
+</script>

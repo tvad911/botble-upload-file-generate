@@ -17,4 +17,5 @@ return [
     'using_button'                        => 'Using button',
     'choose_image'                        => 'Choose image',
     'add_more_image'                      => 'Add more image',
+    'file_exist'                          => 'File was exist, please try chose other',
 ];

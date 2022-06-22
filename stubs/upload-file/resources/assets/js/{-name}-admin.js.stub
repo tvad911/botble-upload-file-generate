@@ -48,7 +48,7 @@ $(document).ready(function () {
                 countArr++;
             }
             else{
-                toastr.error('File was exist, please try chose other', 'Error');
+                toastr.error({Name}.languages.file_exist, 'Error');
             }
         });
 
@@ -58,6 +58,7 @@ $(document).ready(function () {
         $('.reset-file').removeClass('hidden');
 
         $('input#{names}')[0].files = fileListItems(arrFiles);
+        $(this).val("");
     });
 
     var initSortable = function () {
